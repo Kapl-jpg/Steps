@@ -1,22 +1,25 @@
+using System;
+using GameStates;
 using UnityEngine;
 
 namespace Player
 {
     public class PlayerInput : MonoBehaviour
     {
+        [SerializeField] private GameStateManager gameStateManager;
         private Vector2 _mouseAxis;
         public Vector2 MouseAxis => _mouseAxis;
         private Vector2 _movementDirection;
         public Vector2 MovementDirection => _movementDirection;
 
-        public delegate void ChangeLightEvent();
-        public ChangeLightEvent ChangeLight;
+        public event Action OnChangeTorch;
 
-        public delegate void PauseEvent();
-        public PauseEvent Pause;
+        public event Action OnPause;
 
         private void Update()
         {
+            if(gameStateManager.GetCurrentState() == GameStateManager.GameState.Paused)
+                return;
             SetMovementDirection();
             SetMouseRotateAxis();
             SetLight();
@@ -41,7 +44,7 @@ namespace Player
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                ChangeLight?.Invoke();
+                OnChangeTorch?.Invoke();
             }
         }
 
@@ -49,7 +52,7 @@ namespace Player
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Pause?.Invoke();
+                OnPause?.Invoke();
             }
         }
     }

@@ -1,3 +1,5 @@
+using Cursor;
+using GameStates;
 using Player;
 using UnityEngine;
 
@@ -5,15 +7,16 @@ public class PausePanel : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private GameStateManager gameStateManager;
 
     private void OnEnable()
     {
-        playerInput.Pause += ChangeActivityMenuPanel;
+        playerInput.OnPause += ChangeActivityMenuPanel;
     }
     
     private void OnDisable()
     {
-        playerInput.Pause -= ChangeActivityMenuPanel;
+        playerInput.OnPause -= ChangeActivityMenuPanel;
     }
 
     public void ChangeActivityMenuPanel()
@@ -31,12 +34,16 @@ public class PausePanel : MonoBehaviour
     private void OpenMenuPanel()
     {
         menuPanel.SetActive(true);
+        gameStateManager.PauseGame();
+        CursorManager.Instance.UnlockCursor();
         Time.timeScale = 0;
     }
 
     private void ExitMenuPanel()
     {
         menuPanel.SetActive(false);
+        gameStateManager.ResumeGame();
+        CursorManager.Instance.LockCursor();
         Time.timeScale = 1;
     }
 }

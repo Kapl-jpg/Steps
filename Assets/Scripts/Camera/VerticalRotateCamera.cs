@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Camera
 {
-    public class CameraRotate : MonoBehaviour
+    public class VerticalRotateCamera : MonoBehaviour
     {
         [SerializeField] private float sensitivity;
         [SerializeField] private PlayerInput playerInput;
@@ -17,7 +17,7 @@ namespace Camera
 
         private void VerticalRotate()
         {
-            _rotationX = Mathf.Clamp(_rotationX - playerInput.MouseAxis.y * sensitivity, 
+            _rotationX = Mathf.Clamp(_rotationX - playerInput.MouseAxis.y * sensitivity,
                 -minMaxRotateAngle.x,
                 minMaxRotateAngle.y);
             transform.localRotation = Quaternion.Euler(_rotationX, 0, 0);

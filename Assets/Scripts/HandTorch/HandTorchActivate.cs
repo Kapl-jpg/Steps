@@ -8,14 +8,15 @@ namespace HandTorch
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private Light handTorchLight;
         [SerializeField] private HandTorchCharge handTorchCharge;
+        
         private void OnEnable()
         {
-            playerInput.ChangeLight += ChangeLight;
+            playerInput.OnChangeTorch += ChangeLight;
         }
 
         private void OnDisable()
         {
-            playerInput.ChangeLight -= ChangeLight;
+            playerInput.OnChangeTorch -= ChangeLight;
         }
 
         private void Update()
