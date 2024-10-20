@@ -1,4 +1,5 @@
 using System.Collections;
+using Sphere;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,7 +9,7 @@ namespace Enemy.States
     {
         [SerializeField] private EnemyRun runState;
         [SerializeField] private EnemyWait waitState;
-
+        [SerializeField] private SphereBehaviour sphereBehaviour;
         [SerializeField] private Vector2 minMaxTimeBeforeAppearance;
         [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
         [SerializeField] private float appearanceTime;
@@ -24,6 +25,12 @@ namespace Enemy.States
             _enemyStateMachine = new EnemyStateMachine();
             _enemyStateMachine.ChangeState(waitState);
             StartCoroutine(Appearance());
+            sphereBehaviour.Final += Death;
+        }
+
+        private void OnDisable()
+        {
+            sphereBehaviour.Final -= Death;
         }
 
         private void Update()

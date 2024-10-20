@@ -9,15 +9,19 @@ namespace Sphere
         [SerializeField] private new ParticleSystem particleSystem;
         [SerializeField] private Transform[] points;
         [SerializeField] private float movementSpeed;
-        [SerializeField] private Transform enemyBodyTransform;
+        [SerializeField] private Transform playerTransform;
         [SerializeField] private Vector2 minMaxLightDistance;
         [SerializeField] private MeshRenderer meshRenderer;
 
-        [Header("Final light values")] [SerializeField]
-        private float lightSpeed;
+        [Header("Final light values")] 
+        [SerializeField] private float lightSpeed;
         [SerializeField][ColorUsage(false,true)] private Color finalColor;
         [SerializeField] private float finalIntensity;
         [SerializeField] private float finalRange;
+        [SerializeField] private SceneLoader sceneLoader;
+
+        public delegate void FinalEvent();
+        public FinalEvent Final;
 
         private Vector3 _targetPoint;
         private int _pointIndex;
@@ -50,7 +54,8 @@ namespace Sphere
 
         private void SetMovement()
         {
-            transform.position = Vector3.MoveTowards(transform.position, _targetPoint, movementSpeed * Time.deltaTime);
+            if(DistanceBeforePlayer()<minMaxLightDistance.y)
+                transform.position = Vector3.MoveTowards(transform.position, _targetPoint, movementSpeed * Time.deltaTime);
             
             if (transform.position == _targetPoint)
             {
@@ -70,6 +75,7 @@ namespace Sphere
         {
             _final = true;
             particleSystem.gameObject.SetActive(false);
+            Final?.Invoke();
             while (_dissolveValue>0)
             {
                 _dissolveValue -= Time.deltaTime/lightSpeed;
@@ -78,22 +84,22 @@ namespace Sphere
                 light.intensity = Mathf.Lerp(finalIntensity,_startIntensity,_dissolveValue);
                 meshRenderer.material.SetFloat(DissolveValue,_dissolveValue);
                 yield return null;
-
             }
+            sceneLoader.LoadWin();
         }
 
         private void SetLight()
         {
-            if (DistanceBetweenEnemy() < minMaxLightDistance.y)
+            if (DistanceBeforePlayer() < minMaxLightDistance.x)
             {
-                _dissolveValue = DistanceBetweenEnemy() / _changeDistance;
-                meshRenderer.material.SetFloat(DissolveValue,_dissolveValue);
+                _dissolveValue = DistanceBeforePlayer() / _changeDistance;
+                meshRenderer.material.SetFloat(DissolveValue,1/_dissolveValue);
             }
         }
 
-        private float DistanceBetweenEnemy()
+        private float DistanceBeforePlayer()
         {
-            return Vector3.Distance(transform.position, enemyBodyTransform.position);
+            return Vector3.Distance(transform.position, playerTransform.position);
         }
     }
 }
