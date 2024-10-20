@@ -9,14 +9,18 @@ namespace Player
         private Vector2 _movementDirection;
         public Vector2 MovementDirection => _movementDirection;
 
-        public delegate void ChangeLightHandler();
-        public ChangeLightHandler ChangeLight;
+        public delegate void ChangeLightEvent();
+        public ChangeLightEvent ChangeLight;
+
+        public delegate void PauseEvent();
+        public PauseEvent Pause;
 
         private void Update()
         {
             SetMovementDirection();
             SetMouseRotateAxis();
             SetLight();
+            SetPause();
         }
 
         private void SetMouseRotateAxis()
@@ -38,6 +42,14 @@ namespace Player
             if (Input.GetKeyDown(KeyCode.E))
             {
                 ChangeLight?.Invoke();
+            }
+        }
+
+        private void SetPause()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Pause?.Invoke();
             }
         }
     }

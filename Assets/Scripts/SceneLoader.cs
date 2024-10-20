@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,5 +23,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("Lose");
     }
-    
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
