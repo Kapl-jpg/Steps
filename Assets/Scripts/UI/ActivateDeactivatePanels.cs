@@ -4,9 +4,13 @@ namespace UI
 {
     public class ActivateDeactivatePanels : MonoBehaviour
     {
-        public void ChangePanel(GameObject panel)
+        [SerializeField] private GameObject panel;
+        [SerializeField] private GameObject titleGame;
+        
+        public void ChangePanel()
         {
             panel.SetActive(!panel.activeSelf);
+            titleGame.SetActive(!titleGame.activeSelf);
         }
     }
 }
