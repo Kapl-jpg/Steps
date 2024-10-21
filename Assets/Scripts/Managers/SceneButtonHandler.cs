@@ -11,6 +11,7 @@ namespace Managers
 
         public void LoadMenu()
         {
+            Time.timeScale = 1;
             SceneLoader.Instance.LoadMenu();
         }
 

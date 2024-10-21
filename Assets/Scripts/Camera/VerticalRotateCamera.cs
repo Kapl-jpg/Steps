@@ -17,7 +17,7 @@ namespace Camera
 
         private void VerticalRotate()
         {
-            _rotationX = Mathf.Clamp(_rotationX - playerInput.MouseAxis.y * sensitivity,
+            _rotationX = Mathf.Clamp(_rotationX - playerInput.MouseAxis.y * sensitivity * Time.deltaTime,
                 -minMaxRotateAngle.x,
                 minMaxRotateAngle.y);
             transform.localRotation = Quaternion.Euler(_rotationX, 0, 0);

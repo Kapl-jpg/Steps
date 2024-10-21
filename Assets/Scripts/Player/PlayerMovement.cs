@@ -28,7 +28,7 @@ namespace Player
         
         private void SetRotation()
         {
-            transform.Rotate(new Vector3(0,playerInput.MouseAxis.x * rotateSpeed,0));
+            transform.Rotate(new Vector3(0,playerInput.MouseAxis.x * rotateSpeed * Time.deltaTime,0));
         }
     }
 }
