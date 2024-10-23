@@ -1,7 +1,6 @@
 ﻿using Interfaces;
-using UnityEngine;
 
-namespace Enemy.States
+namespace Enemy
 {
     public class EnemyStateMachine
     {
