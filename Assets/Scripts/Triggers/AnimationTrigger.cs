@@ -11,10 +11,13 @@ namespace Triggers
         {
             if (other.CompareTag("Player"))
             {
-                print("trigger");
                 animator.SetTrigger("Play");
-                gameObject.SetActive(!disableTrigger);
             }
+        }
+
+        public void DisableTrigger()
+        {
+            gameObject.SetActive(!disableTrigger);
         }
     }
 }

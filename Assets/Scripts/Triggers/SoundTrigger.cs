@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Triggers
@@ -7,7 +8,7 @@ namespace Triggers
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip audioClip;
         [SerializeField] private bool disableTrigger = true;
-        
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))

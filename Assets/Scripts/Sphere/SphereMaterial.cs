@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using GameStates;
 using UnityEngine;
 
@@ -28,6 +27,11 @@ namespace Sphere
         private void OnDisable()
         {
             gameStateManager.OnGameStateChanged -= Final;
+        }
+
+        private void Start()
+        {
+            SetMaterial();
         }
 
         private void Update()
